@@ -1,3 +1,8 @@
+body{
+  background-color: lightgray;
+
+}
+
 button.btn{
   float: right;
 }
@@ -10,6 +15,28 @@ nav{
   margin-right: 10%;
 }
 
+h5.card-title {
+  color: aliceblue;
+  font-size: 20px;
+  font-family: auto;
+}
+img.card-img-top {
+  border-radius: 6px;
+}
+
+h1{
+  text-align: center;
+  font-size: xxx-large;
+  font-family: serif;
+  color: darkgreen;
+}
+
+h6{
+  color: beige;
+  font-size: 20px;
+  font-family: auto;
+
+}
 /* button.btn.btn-danger{
   margin-right: 10px;
 } */

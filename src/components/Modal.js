@@ -10,6 +10,7 @@ class Modal extends Component {
       <>
         {this.props.show && (
           <div className="custom-modal">
+              <button onClick={this.props.onHide} style={{float:'right'}}>X</button>
                <img  src={data.image} className="img-rounded" alt={{data}.name}/>
                <h6>Name: {data.name}</h6>
                <h6>Gender: {data.gender}</h6>
@@ -17,7 +18,6 @@ class Modal extends Component {
                <h6>Address: {data.address}</h6>
                <h6>Phone: {data.phone}</h6>
                <h6>DOB: {data.dob}</h6>
-            <button onClick={this.props.onHide}>Close Modal</button>
           </div>
         )}
       </>

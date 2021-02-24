@@ -121,9 +121,9 @@ class Users extends Component {
                           <div style={{width:'85%'}}>
                             <button href="#" className="btn btn-danger" onClick={this.removeAllUser} >Clear All</button>
                             <button href="#" className="btn btn-success" onClick={addUser}>Add User</button>
-                                <div className="card" style={{width:'30%' ,marginLeft:'45%', marginTop:'20px', border:'1px solid #ccc', padding:'30px'}}>
+                                <div className="card" style={{width:'30%' ,marginLeft:'45%', marginTop:'20px', border:'1px solid #ccc', padding:'40px', backgroundColor:'lightslategray'}}>
                                     <img src={item.picture.medium} className="card-img-top" alt={item.name.first}/>
-                                    <div className="card-body">
+                                    <div className="card-body" style={{}}>
                                         <h5 className="card-title">Name: {item.name.first}</h5>
                                         <h5 className="card-title">Phone No: {item.phone}</h5>
                                     </div>
@@ -133,8 +133,8 @@ class Users extends Component {
                     </div>
                     <div className="container" style={{marginTop:'50px'}}>
                         {currentPosts.map((user,index) => (
-                          <div>
-                              <div className='well well-sm' style={{width:'80%', display:'inline-table', marginLeft:'10%'}} onClick={() => this.getModal(user)}>
+                          <div>     
+                              <div className='well well-sm' style={{width:'80%', display:'inline-table', marginLeft:'10%',backgroundColor:'lavender',color:'blue' }} onClick={() => this.getModal(user)}>
                                 <img   src={user.image} className="img-rounded" alt={user.name}/>
                                <span style = {{marginLeft:"25px"}}>Name: {user.name}</span>
                                <span style = {{marginLeft:"50px"}}>Phone: {user.phone}</span>
