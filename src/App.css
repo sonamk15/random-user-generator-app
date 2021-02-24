@@ -28,7 +28,14 @@
   color: #61dafb;
 }
 
-
+/*  */
+button.btn{
+  float: right;
+}
+button.btn.btn-success{
+  margin-right: 10px;
+}
+/*  */
 
 
 @keyframes App-logo-spin {

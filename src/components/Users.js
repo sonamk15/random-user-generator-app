@@ -22,6 +22,28 @@ class Users extends Component {
       hideModal = () => {
         this.setState({ showModal: false });
       };
+
+      removeUser = userId => {
+          console.log(userId)
+        const requestOptions = {
+          method: 'DELETE'
+        };
+        fetch("http://localhost:9000/delete/" + userId, requestOptions).then((response) => {
+          return response.json();
+        }).then((result) => {
+        });
+      }
+
+      removeAllUser = () => {
+        console.log("delete all user")
+        const requestOptions = {
+            method: 'DELETE'
+        };
+        fetch("http://localhost:9000/deleteAll" , requestOptions).then((response) => {
+            return response.json();
+        }).then((result) => {
+        });
+    }
     
     componentDidMount() {
         fetch('https://randomuser.me/api/')
@@ -78,26 +100,39 @@ class Users extends Component {
                     <h1>Random User Application</h1>
                     <div className="container">
                         {items.map((item,idx) => (
-                            <div className="card" style={{width:'30%' ,marginLeft:'40%', marginTop:'20px', border:'1px solid #ccc', padding:'30px'}}>
+                          <div>
+                            <button href="#" className="btn btn-danger" onClick={this.removeAllUser} >Clear All</button>
+                            <button href="#" className="btn btn-success" onClick={addUser}>Add User</button>
+
+                                <div className="card" style={{width:'30%' ,marginLeft:'30%', marginTop:'20px', border:'1px solid #ccc', padding:'30px'}}>
                                 <img src={item.picture.medium} className="card-img-top" alt={item.name.first}/>
                                 <div className="card-body">
                                  <h5 className="card-title">Name: {item.name.first}</h5>
                                  <h5 className="card-title">Phone No: {item.phone}</h5>
-                                 <a href="#" className="btn btn-primary" onClick={addUser}>Add User</a>
-                                 </div>                         
+                                </div>
+                         
                           </div>
+          
+                          </div>
+                          
                                          
                         ))}                  
                     </div>
                     <h2>Listed Users</h2> 
                     <div className="container">
                         {users.map((user,index) => (
-                            <div className='well well-sm'>
+                          <div>
+                                <div className='well well-sm' style={{width:'80%', display:'inline-table'}} onClick={() => this.getModal(user)}>
                                 <img   src={user.image} className="img-rounded" alt={user.name}/>
                                <span style = {{marginLeft:"25px"}}>Name: {user.name}</span>
                                <span style = {{marginLeft:"50px"}}>Phone: {user.phone}</span>
-                               <button onClick={() => this.getModal(user)}>Popup</button>
-                          </div>                                         
+
+                               {/* <button >Popup</button> */}
+                          </div>
+                          <button style={{padding:'5px', marginLeft:"10px", marginBottom:'20px' , display:'inline',left:'50px'}} onClick={() => { this.removeUser(user.id) }} className="delete-btn">Delete</button>
+                          </div>
+
+                                                                   
                         ))}  
                           <Modal
                         show={showModal}
