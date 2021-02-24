@@ -1,6 +1,15 @@
 button.btn{
   float: right;
 }
-button.btn.btn-success{
+button.btn.btn-success {
   margin-right: 10px;
 }
+
+nav{
+  float: right;
+  margin-right: 10%;
+}
+
+/* button.btn.btn-danger{
+  margin-right: 10px;
+} */

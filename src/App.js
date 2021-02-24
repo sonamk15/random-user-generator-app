@@ -6,7 +6,7 @@ import store from "./store/index";
 function App() {
   return (
     <Provider store={store()}>
-      <div className='container'>
+      <div className='container-fluid'>
       <Users/>
       </div>
     </Provider> 
