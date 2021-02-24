@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Modal from './Modal'
 import Pagination from './Pagination';
+import { addUserAction } from "../store/action/index";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
 
 class Users extends Component {
@@ -74,15 +77,18 @@ class Users extends Component {
             fetch('http://localhost:9000/get')
             .then((res)=> res.json())
             .then((res)=> {
-                this.setState({
-                    users: res,
-                    flag: true
-                })
+                this.props.addUserAction(res)
+                // this.setState({
+                //     users: res,
+                //     flag: true
+                // })
             })
     }
 
     render() {
-        var { items, loading, users, data, showModal,dataModal,perPage, currentPage} = this.state
+        console.log(this.props)
+        var { items, loading,  data, showModal,dataModal,perPage, currentPage} = this.state
+        var {users} = this.props
 
           // Get current posts
         const indexOfLastPost = currentPage * perPage;
@@ -154,6 +160,23 @@ class Users extends Component {
     }
 }
 
-export default Users
+const mapStateToProps = state => {
+    return {
+        ...state,
+        users:state.users.data
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(
+        {addUserAction},
+        dispatch
+    )
+
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users) 
 
 
