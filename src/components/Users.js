@@ -38,7 +38,10 @@ class Users extends Component {
         fetch("http://localhost:9000/delete/" + userId, requestOptions).then((response) => {
           return response.json();
         }).then((result) => {
+
         });
+        window.location.reload();
+
       }
 
       removeAllUser = () => {
@@ -50,6 +53,8 @@ class Users extends Component {
             return response.json();
         }).then((result) => {
         });
+        window.location.reload();
+
     }
     
     componentDidMount() {
@@ -106,6 +111,8 @@ class Users extends Component {
             fetch('http://localhost:9000/add', requestOptions)
                 .then(response => response.json())
                 .then(data => console.log(data));
+                window.location.reload();
+
         }
         if (!loading) {
             return (
