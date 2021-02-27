@@ -14,7 +14,6 @@ class Users extends Component {
             flag:false,
             items: [],
             loading: false,
-            data:{},
             showModal:false,
             dataModal: {},
             perPage: 5,
@@ -30,17 +29,18 @@ class Users extends Component {
         this.setState({ showModal: false });
       };
 
+
       removeUser = userId => {
-          console.log(userId)
         const requestOptions = {
           method: 'DELETE'
         };
+        const userData = (this.props.users)
+        const idx = userData.findIndex(x => x.id == userId)
+        this.props.users.pop(idx)
+            
         fetch("http://localhost:9000/delete/" + userId, requestOptions).then((response) => {
           return response.json();
-        }).then((result) => {
-
-        });
-        window.location.reload();
+        }).then((result) => {}); 
 
       }
 
@@ -53,11 +53,24 @@ class Users extends Component {
             return response.json();
         }).then((result) => {
         });
-        window.location.reload();
 
     }
-    
-    componentDidMount() {
+
+    addUser = (data)=>{
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        };
+        fetch('http://localhost:9000/add', requestOptions)
+            .then(response => response.json())
+            .then(async (data) => await(data));
+            this.props.users.push(data)
+    }
+
+
+
+    getRandomUser = () => {
         fetch('https://randomuser.me/api/')
             .then((res) => res.json())
             .then((res) => {
@@ -72,48 +85,41 @@ class Users extends Component {
                     userObj['address']=userInfo.location.city
                     userObj['dob']=userInfo.dob.date
                   })
+                  this.addUser(userObj)
                   this.setState({
                     items: response,
-                    data:userObj,
-                    loading: true
                 })
+               
             })
+        }
 
-            fetch('http://localhost:9000/get')
-            .then((res)=> res.json())
-            .then((res)=> {
-                this.props.addUserAction(res)
-                // this.setState({
-                //     users: res,
-                //     flag: true
-                // })
+
+    componentDidMount(){
+        fetch('http://localhost:9000/get')
+        .then((res)=> res.json())
+        .then((res)=> {
+            this.props.addUserAction(res)
+            // console.log(res,"add")
+            this.setState({
+                loading: true
             })
+        })
+
     }
 
+
+
     render() {
-        console.log(this.props)
-        var { items, loading,  data, showModal,dataModal,perPage, currentPage} = this.state
+        // console.log(this.props, 'prop')
+        var { items, loading, showModal,dataModal,perPage, currentPage} = this.state
         var {users} = this.props
 
           // Get current posts
         const indexOfLastPost = currentPage * perPage;
         const indexOfFirstPost = indexOfLastPost - perPage;
         const currentPosts = users.slice(indexOfFirstPost, indexOfLastPost);
-        const paginate = pageNumber => this.setState({currentPage:pageNumber});
+        const paginate = pageNumber => this.setState({currentPage:pageNumber});   
 
-        // add a new user
-        const addUser = ()=>{
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            };
-            fetch('http://localhost:9000/add', requestOptions)
-                .then(response => response.json())
-                .then(data => console.log(data));
-                window.location.reload();
-
-        }
         if (!loading) {
             return (
                 <div>Loading...</div>
@@ -123,12 +129,12 @@ class Users extends Component {
             return (
                 <div>
                     <h1 style={{textAlign:'center'}}>Random User Generator </h1>
+                    <button href="#" className="btn btn-danger" onClick={this.removeAllUser} >Clear All</button>
+                    <button href="#" className="btn btn-success" onClick={this.getRandomUser}>Add User</button>
                     <div className="container">
                         {items.map((item,idx) => (
                           <div style={{width:'85%'}}>
-                            <button href="#" className="btn btn-danger" onClick={this.removeAllUser} >Clear All</button>
-                            <button href="#" className="btn btn-success" onClick={addUser}>Add User</button>
-                                <div className="card" style={{width:'30%' ,marginLeft:'45%', marginTop:'20px', border:'1px solid #ccc', padding:'40px', backgroundColor:'lightslategray'}}>
+                                  <div className="card" style={{width:'30%' ,marginLeft:'45%', marginTop:'20px', border:'1px solid #ccc', padding:'40px', backgroundColor:'lightslategray'}}>
                                     <img src={item.picture.medium} className="card-img-top" alt={item.name.first}/>
                                     <div className="card-body" style={{}}>
                                         <h5 className="card-title">Name: {item.name.first}</h5>
